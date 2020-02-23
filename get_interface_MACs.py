@@ -26,10 +26,26 @@ def mac_combine(m_c):
     return mac_str
     
 def increment_mac(mac, switch_model):
-    # split model into list - example 'MS350' , '24P'
-    x = switch_model.split('-')
-    # use regex to export only numbers in sequence 1
-    num_ports = re.sub('[^0-9]','', x[1])
+    if switch_model == 'MS22' or switch_model == 'MS42' or switch_model == 'MS42P':
+        if switch_model == 'MS22':
+            num_ports = int(re.sub('[^0-9]','', switch_model))
+            num_ports = num_ports + 2
+        if switch_model == 'MS42':
+            num_ports = int(re.sub('[^0-9]','', switch_model))
+            num_ports += 6
+        if switch_model == 'MS42P':
+            temp = []
+            temp = re.findall('[0-9]+', switch_model)
+            num_ports = int(temp[0]) 
+            num_ports += 6
+    else:
+        # split model into list - example 'MS350' , '24P'
+        x = switch_model.split('-')
+        # use regex to export only numbers in sequence 1
+        #num_ports = re.sub('[^0-9]','', x[1])
+        temp = []
+        temp = re.findall('[0-9]+', x[1])
+        num_ports = int(temp[0])
     # split mac to list
     mac_split = mac.split(':')
     # convert sequences to ints
@@ -62,14 +78,22 @@ for x in range(1,49):
 #Write header
 csvwriter.writerow(mac_header)
 
-network_id = os.getenv('network_id')
+# comment to search network only
+org_id = {}
+org_id['organization_id'] = os.getenv('organization_id')
+
+# uncomment to search network only
+#network_id = os.getenv('network_id')
 x_cisco_meraki_api_key = os.getenv('api_key')
 
 client = MerakiSdkClient(x_cisco_meraki_api_key)
 devices_controller = client.devices
 
 try:
-    result = devices_controller.get_network_devices(network_id)
+    #Gets devices for a specific network
+    #result = devices_controller.get_network_devices(network_id)
+    # if you want only switches in a network, comment line below and uncomment above line
+    result = devices_controller.get_organization_devices(org_id)
     for d in result:
         model = d['model']
         if model.startswith('MS'):
