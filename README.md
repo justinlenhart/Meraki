@@ -13,6 +13,7 @@ Justin-Office,MS220-8P,88:15:44:de:09:f8,88:15:44:de:09:f9,88:15:44:de:09:fa,88:
 
 To get started with this script:
 1. Install Python 3.X
-2. Install Meraki SDK - https://developer.cisco.com/meraki/api/#/python/getting-started
-3. Enable API access - https://developer.cisco.com/meraki/api/#/rest/guides/api-key
-4. Put organization ID and network ID in .env file - https://developer.cisco.com/meraki/api/#/rest/guides/rest-api-quick-start/find-your-organization-id
+2. Install devenv - pip3 install python-dotenv
+3. Install Meraki SDK - https://developer.cisco.com/meraki/api/#/python/getting-started
+4. Enable API access - https://developer.cisco.com/meraki/api/#/rest/guides/api-key
+5. Put API key, org ID and network ID in .env file - https://developer.cisco.com/meraki/api/#/rest/guides/rest-api-quick-start/find-your-organization-id
